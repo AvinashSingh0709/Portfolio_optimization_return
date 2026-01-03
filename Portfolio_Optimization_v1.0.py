@@ -3,9 +3,7 @@ import subprocess
 import os
 import importlib.util
 
-# ==========================================
-# 0. AUTO-INSTALLER & LAUNCHER
-# ==========================================
+
 def check_and_install_dependencies():
     """Checks for required libraries and installs them if missing."""
     required_libraries = ['streamlit', 'plotly', 'yfinance', 'pandas', 'numpy', 'scipy', 'matplotlib']
@@ -40,9 +38,7 @@ if __name__ == "__main__":
         subprocess.run(["streamlit", "run", sys.argv[0]])
         sys.exit()
 
-# ==========================================
-# 1. IMPORTS (Safe to run now)
-# ==========================================
+
 try:
     import streamlit as st
     import yfinance as yf
@@ -56,9 +52,9 @@ except ImportError:
     # This fallback catches any edge cases where install appeared to work but import failed
     st = None 
 
-# ==========================================
-# 2. THE LOGIC PIPELINE
-# ==========================================
+
+
+
 class PortfolioAnalyzer:
     def __init__(self, tickers, benchmark, start_date, end_date, rf_rate):
         self.tickers = tickers
@@ -140,9 +136,9 @@ class PortfolioAnalyzer:
             results[:,i] = [p_std, p_ret, (p_ret - self.rf)/p_std]
         return results
 
-# ==========================================
-# 3. DASHBOARD UI
-# ==========================================
+
+
+
 if st: # Only run if streamlit loaded successfully
     st.set_page_config(page_title="Auto-Portfolio", layout="wide")
 
@@ -191,4 +187,5 @@ if st: # Only run if streamlit loaded successfully
             else:
                 st.error("Could not fetch data. Check tickers.")
     else:
+
         st.info("Click 'Run Analysis' in the sidebar.")
